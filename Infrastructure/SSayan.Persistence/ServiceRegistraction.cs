@@ -22,6 +22,7 @@ namespace SSayan.Persistence
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<IStaffWriteRepository, StaffWriteRepository>();
             services.AddScoped<IStaffReadRepository, StaffReadRepository>();
+      
         }
     }
 }
