@@ -1,0 +1,6 @@
+@SSayan.API_HostAddress = http://localhost:5130
+
+GET {{SSayan.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

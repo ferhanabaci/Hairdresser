@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SSayan.Application\SSayan.Application.csproj" />
+  </ItemGroup>
+
 </Project>
