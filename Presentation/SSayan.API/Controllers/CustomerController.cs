@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SSayan.Application.Features.Commands.Customer.CreateCustomer;
+using SSayan.Application.Features.Queries.Customer.GetByCustomer;
 using SSayan.Application.Repositories.Customers;
+using SSayan.Domain.Entities;
+using System.Net;
 
 namespace SSayan.API.Controllers
 {
@@ -8,25 +13,27 @@ namespace SSayan.API.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerWriteRepository _customerWriteRepository;
 
-        public CustomerController(ICustomerWriteRepository customerWriteRepository)
+        readonly IMediator _mediator;
+
+        public CustomerController(ICustomerWriteRepository customerWriteRepository, IMediator mediator)
         {
-            _customerWriteRepository = customerWriteRepository;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task Add()
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateCustomerCommandRequest createCustomer)
         {
-            await _customerWriteRepository.AddRangeAsync(new()
-            {
-                new() {Id = Guid.NewGuid(),Name ="Ferhan",TelefonNumber = "5383972822",Surname = "Abacı"},
-                new() {Id = Guid.NewGuid(),Name ="Sıla",TelefonNumber = "5383972822",Surname = "Abacı"},
-                new() {Id = Guid.NewGuid(),Name ="Ahmet",TelefonNumber = "5383972822",Surname = "Abacı"},
-                new() {Id = Guid.NewGuid(),Name ="Mehmet",TelefonNumber = "5383972822",Surname = "Abacı"}
+            CreateCustomerCommandResponse createCustomerCommandResponse = await _mediator.Send(createCustomer);
+            return Ok(HttpStatusCode.Created);
+                
+        }
 
-            });
-            await _customerWriteRepository.SaveAsync();
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetByIdCustomerQueryRequest getByIdCustomerQueryRequest)
+        {
+            GetByIdCustomerQueryResponse response = await _mediator.Send(getByIdCustomerQueryRequest);
+            return Ok(response);
         }
 
     }

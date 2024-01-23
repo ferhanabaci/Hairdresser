@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using SSayan.Application.Repositories.Customers;
 using SSayan.Persistence.Repositories;
 using SSayan.Application.Repositories;
+using System.Reflection;
 
 namespace SSayan.Persistence
 {
@@ -22,7 +23,6 @@ namespace SSayan.Persistence
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<IStaffWriteRepository, StaffWriteRepository>();
             services.AddScoped<IStaffReadRepository, StaffReadRepository>();
-      
         }
     }
 }
