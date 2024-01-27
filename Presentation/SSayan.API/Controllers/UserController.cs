@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SSayan.Application.Features.Commands.AppUsers.CreateUser;
+using SSayan.Application.Features.Commands.AppUsers.LoginUser;
 
 namespace SSayan.API.Controllers
 {
@@ -16,10 +17,17 @@ namespace SSayan.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> CreateUser(CreateUserCommandRequest pRequest)
         {
             CreateUserCommandResponse response = await _mediator.Send(pRequest);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginUserCommandRequest pRequest)
+        {
+            LoginUserCommandResponse response = await _mediator.Send(pRequest);
             return Ok(response);
         }
     }
