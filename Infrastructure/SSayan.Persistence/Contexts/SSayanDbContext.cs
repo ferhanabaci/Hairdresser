@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SSayan.Domain.Entities;
+using SSayan.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SSayan.Persistence.Contexts
 {
-    public class SSayanDbContext : DbContext
+    public class SSayanDbContext : IdentityDbContext<AppUser,AppRole,string>
     {
         public SSayanDbContext(DbContextOptions options) : base(options) { }
 

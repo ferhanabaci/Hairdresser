@@ -11,6 +11,7 @@ using SSayan.Application.Repositories.Customers;
 using SSayan.Persistence.Repositories;
 using SSayan.Application.Repositories;
 using System.Reflection;
+using SSayan.Domain.Entities.Identity;
 
 namespace SSayan.Persistence
 {
@@ -19,6 +20,14 @@ namespace SSayan.Persistence
         public static void AddPersistenceServices(this IServiceCollection services)
         {
             services.AddDbContext<SSayanDbContext>(options => options.UseSqlServer(Configuration.ConnectionString));
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<SSayanDbContext>();
             services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<IStaffWriteRepository, StaffWriteRepository>();
